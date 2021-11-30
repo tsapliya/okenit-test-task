@@ -1,15 +1,22 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <span v-if="feed.length === 0">Сообщений нет</span>
+    <message v-else v-for="(message, i) in feed" :key="i" :message="message"/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import messages from '@/compositions/messages'
+import Message from "@/components/message";
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  components: {Message},
+  setup() {
+    return {
+      ...messages()
+    }
+  },
+  mounted() {
+    this.addFeedFromJson()
   }
 }
 </script>
@@ -17,10 +24,6 @@ export default {
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
