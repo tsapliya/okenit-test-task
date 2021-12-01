@@ -1,6 +1,8 @@
 <template>
+  <div class="messages">
     <span v-if="feed.length === 0">Сообщений нет</span>
     <message v-else v-for="(message, i) in feed" :key="i" :message="message"/>
+  </div>
 </template>
 
 <script>
@@ -25,5 +27,10 @@ export default {
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   color: #2c3e50;
+}
+
+.messages {
+  width: 70%;
+  margin: 0 auto;
 }
 </style>
