@@ -10,6 +10,11 @@ npm install
 npm run serve
 ```
 
+### Start json-server fake REST api
+```
+npm run json-server
+```
+
 ### Compiles and minifies for production
 ```
 npm run build

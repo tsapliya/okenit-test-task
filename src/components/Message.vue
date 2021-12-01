@@ -26,6 +26,10 @@ export default {
   padding: 2em 0;
 }
 
+.message:last-child {
+  border-bottom: none;
+}
+
 a {
   color: inherit;
   text-decoration: none;

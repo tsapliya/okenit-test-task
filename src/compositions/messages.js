@@ -8,7 +8,12 @@ export default function () {
     addFeedFromJson: () => {
       store.dispatch('messages/addFeedFromJson')
     },
-    feed: computed( () => store.getters["messages/getColoredFeed"])
+    loadFeed: () => {
+      store.dispatch('messages/loadFeed')
+    },
+    feed: computed(() => store.getters["messages/getColoredFeed"]),
+    isLoadingData: computed(() => store.state.messages.isLoadingData),
+    hasNextPage: computed(() => store.state.messages.hasNextPage)
   }
 
 }

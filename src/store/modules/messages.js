@@ -1,10 +1,13 @@
-import messages from '@/api/messages'
+import messagesApi from '@/api/messages'
 import messageGetter from '@/compositions/messageGetterFunctions'
 
 export default {
   namespaced: true,
   state: {
-    feed: []
+    feed: [],
+    currentPage: 0,
+    isLoadingData: false,
+    hasNextPage: undefined
   },
   getters: {
     getColoredFeed(state) {
@@ -19,12 +22,32 @@ export default {
   mutations: {
     pushFeed(state, payload) {
       state.feed.push(...payload)
+    },
+    setLoadingDataStatus(state, payload) {
+      state.isLoadingData = payload
+    },
+    incrementCurrentPage(state) {
+      state.currentPage++
+    },
+    setNextPageExists(state, payload) {
+      state.hasNextPage = payload
     }
   },
   actions: {
-    addFeedFromJson({commit}) {
-      const feed = messages.loadFeedFromJson()
-      commit('pushFeed', feed)
+    // addFeedFromJson({commit}) {
+    //   const feed = messagesApi.loadFeedFromJson()
+    //   commit('pushFeed', feed)
+    // }
+
+    loadFeed({state, commit}) {
+      commit('setLoadingDataStatus', true)
+      commit('incrementCurrentPage')
+      return messagesApi.loadFeedFromJsonServer(state.currentPage)
+        .then(response => {
+          commit("pushFeed", response.data)
+          commit('setLoadingDataStatus', false)
+          commit('setNextPageExists', response.hasNextPage)
+        })
     }
   }
 }
